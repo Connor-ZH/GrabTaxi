@@ -5,7 +5,6 @@ DBhelper = Helper()
 
 def find_zone(long,lati):
     '''
-
     :param long:
     :param lati:
     :return: if the location is valid, return the corresponding zone otherwise return -1
@@ -70,4 +69,3 @@ def find_nearest_drivers(pickup_location,distance=4):
     nearby_drivers = DBhelper.get_nearby_drivers(longitude,latitude,distance,search_zones)
     sorted_drivers = sort_nearest_drivers(nearby_drivers)
     return sorted_drivers
-
