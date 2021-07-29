@@ -13,8 +13,8 @@ def update_all_drivers_locations(with_redis=True):
     '''
     def job():
         for driver_id in range(1,20001):
-            longitude = random.randint(0, 90)
-            latitude = random.randint(0, 90)
+            longitude = 0
+            latitude = 0
             update_driver_location(driver_id, longitude, latitude, with_redis)
     schedule.every(1).seconds.do(job)
     while 1:

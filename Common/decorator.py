@@ -10,11 +10,14 @@ def log_error_db(f):
         try:
             return f(self,*args,**kwargs)
         except IndexError:
-            print(f'An IndexError was caught while using the api {f.__name__}')
+            print(f'No result was gained while using the api {f.__name__}')
+            return False
         except psycopg2.OperationalError:
             print(f'A psycopg2 OperationalErrorr was caught while using the api {f.__name__}')
+            return False
         except:
             print(f'A Common Error was caught while using the api {f.__name__}')
+            return False
     return wrapper
 
 def verify_token(f):

@@ -9,7 +9,7 @@ def login(user_name,password):
         token = create_token(user_id=user_id)
         return token
     else:
-        return redirect(url_for('login'))
+        return "Wrong password"
 
 def create_trip(token):
     location_pickup = [float(request.form['lati_of_pickup']),float(request.form['long_of_pickup'])]

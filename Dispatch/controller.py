@@ -74,7 +74,7 @@ def update_trip_status(trip_id,status):
         
 def verify_password_user(user_name,password):
     real_password = DBhelper.get_password_user(user_name)
-    if real_password == password:
+    if real_password and real_password == password:
         return True
     else:
         return False
