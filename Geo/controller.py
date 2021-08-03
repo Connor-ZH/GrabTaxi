@@ -4,6 +4,7 @@ from Common.enum import *
 from Geo import DBhelper as DBhelper
 from Filter import controller as filter
 from Redis import controller as redis
+import numpy as np
 
 
 def get_search_zones(long,lati,distance,origin_zone):
@@ -62,6 +63,9 @@ def update_driver_location(driver_id,longitude,latitude, with_filter=True):
         DBhelper.update_driver_location(driver_id, longitude, latitude)
         return
     pre_longitude, pre_latitude = filter.get_driver_location(driver_id)
+    if np.random.choice([True,False], 1,replace=True, p=[0.2, 0.8]):
+        longitude = pre_longitude
+        latitude = pre_latitude
     if (pre_latitude == None and pre_latitude == None) or (pre_longitude != longitude or pre_latitude != latitude):
         DBhelper.update_driver_location(driver_id, longitude, latitude)
         filter.update_driver_location(driver_id,longitude,latitude)
