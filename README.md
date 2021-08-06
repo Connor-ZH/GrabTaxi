@@ -9,8 +9,12 @@ This project aims to build an online Easy Ride Booking system, which enables use
 
 ## Infrastructure ##
 Generally, this project is mainly written in **Python** using **Flask** with **MVC** pattern. 
-<br>For the front-end user interface, the front-end pages are displayed with **HTML** file. And **JavaScript** are used to develop the dynamic front-end user interface which interacts with back-end API with the help of **XMLHttpRequest**.
-
+<br>For the front-end user interface, the front-end pages are displayed with **HTML** file. And **JavaScript** is used to develop the dynamic front-end user interface which interacts with back-end API with **XMLHttpRequest**.
+<br>For the back-end API, it is implemented by **Flask** which provides a lot of useful components like make_response, url_for, redirect, etc.
+<br>For the token based authentication, the token is created by the package **itsdangerous**.
+<br>For the uuid which is used as trip id, it is created by the package **uuid**.
+<br>For the database, it is implemented by **PostgreSQL** which communicates with the back-end API using **psycopg2**.
+<br>For the middleware, the double-redis structure is built and controlled by the package **Redis**.
 
 ## Detailed Design
 
