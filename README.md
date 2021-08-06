@@ -9,8 +9,8 @@ This project aims to build an online Easy Ride Booking system, which enables use
 
 ## Infrastructure ##
 Generally, this project is mainly written in **Python** using **Flask** with **MVC** pattern. 
-<br>For the front-end user interface, the front-end pages are displayed with **HTML** file. And **JavaScript** are used to develop the dynamic front-end user interface with the help of 
-And **SQL** is used to manipulate the data stored in the database.
+<br>For the front-end user interface, the front-end pages are displayed with **HTML** file. And **JavaScript** are used to develop the dynamic front-end user interface which interacts with back-end API with the help of **XMLHttpRequest**.
+
 
 ## Detailed Design
 
