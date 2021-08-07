@@ -35,6 +35,6 @@ For the Dispatch Service, there are three tables inside its database. The trip t
 <img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Database_of_Geo_Service.png" width="500"/>
 </p>
 <p align="center">Database Design of Geo Service</p>
-For the Geo Service, there are 
+For the Geo Service, there are 101 tables inside its database. Among those 101 tables, one is the driver_location_table, which contains the location and the corresponding zone of all the drivers, the other 100 tables contains the location information of the drivers in the corresponding zone. The zones are splited based on the range of driver location. The reason of the tables setting is that it can help with an efficient mataching algorithm to match the nearest drivers, which would be clarified later.
 - 
 ## Test
