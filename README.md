@@ -24,6 +24,7 @@ Generally, this project is mainly written in **Python** using **Flask** with **M
 <p align="center">Service Structure Diagram</p>
 As seen in the diagram, considering the load balance in the real life scenario, the service struture of this project consists of two services, which are Dispatch Service and Geo Service. Dispatach Service is responsible for handling the basic business logic like processing user's request, driver's answer and so on, while Geo Service is reponsible for handling the request of driver's updating realtime position, matching eligible drivers based on an efficient matching algorithm, etc.
 
-- *** Database Design ***
+- ### Database Design ###
+
 - 
 ## Test
