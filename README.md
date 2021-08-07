@@ -18,5 +18,7 @@ Generally, this project is mainly written in **Python** using **Flask** with **M
 
 ## Detailed Design
 - ### Service Structure ###
-
+<p align="center">
+<img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Service_structure.png" alt="drawing" width="500"/>
+</p>
 ## Test
