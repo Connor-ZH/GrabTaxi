@@ -36,5 +36,10 @@ For the Dispatch Service, there are three tables inside its database. The trip t
 </p>
 <p align="center">Database Design of Geo Service</p>
 For the Geo Service, there are 101 tables inside its database. Among those 101 tables, one is the driver_location_table, which contains the location and the corresponding zone of all the drivers, the other 100 tables contains the location information of the drivers in the corresponding zone. The zones are splited based on the range of driver location. The reason of the tables setting is that it can help with an efficient mataching algorithm to match the nearest drivers, which would be clarified later.
+
 - ### Middleware Design ###
-## Test
+<p align="center">
+<img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Design of Double Redis Structure.png" width="600"/>
+</p>
+<p align="center">Design of Double Redis Structure</p>
+As seen in the diagram, a Read/Write Splitting Double Redis structure is implemented in this project to cut down the QPS of database server as well as speed up the process of updating driver location query from user. A redis is used as a filter to filter out the driver's request which is going to update the same position. This idea comes from the real life scenario where driver may stay at the same position due to traffic jam. Another redis is used for users to subscribe their driver's position. A driver id key will be created in the database once the driver accepts the trip. From then on, the filter will keep updating the driver location in this redis if the corresponding driver key is inside the redis so that the redis does not send query to database too much. Once the trip is done, the corresponding driver id key will be removed from the redis.
