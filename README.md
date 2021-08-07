@@ -43,3 +43,73 @@ For the Geo Service, there are 101 tables inside its database. Among those 101 t
 </p>
 <p align="center">Design of Double Redis Structure</p>
 As seen in the diagram, a Read/Write Splitting Double Redis structure is implemented in this project to cut down the QPS of database server as well as speed up the process of updating driver location query from user. A redis is used as a filter to filter out the driver's request which is going to update the same position. This idea comes from the real life scenario where driver may stay at the same position due to traffic jam. Another redis is used for users to subscribe their driver's position. A driver id key will be created in the database once the driver accepts the trip. From then on, the filter will keep updating the driver location in this redis if the corresponding driver key is inside the redis so that the redis does not send query to database too much. Once the trip is done, the corresponding driver id key will be removed from the redis.
+
+- ### Design of Driver Matching Algorithm ###
+An efficient driver matching algorithm is put forward in this project which is used to optimize the speed of matching the neraest drivers for the user. Instard of searching the whole driver location table, the driver location table is splited into different zone tables according to their location for searching.
+The function to get the corresponding zone of given locations is shown as below:
+```
+def find_zone(long,lati):
+    '''
+    find the zone where the driver is
+    :param long:
+    :param lati:
+    :return: if the location is valid, return the corresponding zone otherwise return -1
+    '''
+    if long < 0 or lati < 0 or long > 90 or lati > 90:
+        return -1
+    return  (long)//10 + (lati)//10*10
+```
+Once the user upload their trip order to the dispatch service, the Dispatch Service will send the pickup location in the trip to the Geo Service. Then the Geo Service will use the find_zone funciton to get the corresponding zone of pickup location. After that, the Geo service will call the following get_search_zones function make sure whether it should iterate the driver in other driver_Of_zone tables
+```
+def get_search_zones(long,lati,distance,origin_zone):
+    '''
+    judge whether needs to search the drivers in the neighbour zones, if so put the zone into res
+    :param long:
+    :param lati:
+    :param distance:
+    :param zone:
+    :return: A list of zones to search for nearby drivers
+    '''
+    final_result = [origin_zone]
+    direction_zone_dict = {Direction.Right: find_zone(long, lati + distance), Direction.Left: find_zone(long, lati - distance),
+                           Direction.Up: find_zone(long + distance, lati), Direction.Down: find_zone(long - distance, lati)}
+
+    valid_directions = []
+    for dir, zone in direction_zone_dict.items():
+        if zone != origin_zone and zone != -1:
+            valid_directions.append(dir)
+            final_result.append(zone)
+
+    if len(valid_directions) >= 2:
+        neighbour_zone_direct_dict = {origin_zone + 9: (Direction.Left, Direction.Up), origin_zone + 11: (Direction.Right, Direction.Up),
+                                      origin_zone - 11: (Direction.Down, Direction.Left), origin_zone - 9: (Direction.Down, Direction.Right)}
+
+        for neighbour, dir_tuple in neighbour_zone_direct_dict.items():
+            if dir_tuple[0] in valid_directions and dir_tuple[1] in valid_directions:
+                final_result.append(neighbour)
+    return final_result
+```
+After getting the zones to search, the Geo Service will iterate the driver in all the tables in the final_result returned by the get_search_zones function and calculate their distance to pickup location. After that, an heaptify function is called to sort the distance of the drivers and get the top ten drivers, which would be returned to Dispatch Service.
+```
+def sort_nearest_drivers(drivers):
+    '''
+    sort the drivers according to their distance to the pickup location and return the top 10 drivers_id
+    :param drivers
+    :return: the top 10 drivers_id
+    '''
+    for index in range((len(drivers)-2)//2,-1,-1):
+        bubble_down(drivers,index)
+    return drivers[0:10]
+
+def find_nearest_drivers(pickup_location,distance=4):
+    drivers = []
+    longitude = pickup_location[0]
+    latitude = pickup_location[1]
+    zone_of_pickup_location = find_zone(longitude,latitude)
+    search_zones = get_search_zones(longitude,latitude,distance,zone_of_pickup_location)
+    nearby_drivers = DBhelper.get_nearby_drivers(longitude,latitude,distance,search_zones)
+    sorted_drivers = sort_nearest_drivers(nearby_drivers)
+    return sorted_drivers
+```
+So far, the matching algorithm is done.
+
