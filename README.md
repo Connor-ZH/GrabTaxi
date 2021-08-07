@@ -25,6 +25,16 @@ Generally, this project is mainly written in **Python** using **Flask** with **M
 As seen in the diagram, considering the load balance in the real life scenario, the service struture of this project consists of two services, which are Dispatch Service and Geo Service. Dispatach Service is responsible for handling the basic business logic like processing user's request, driver's answer and so on, while Geo Service is reponsible for handling the request of driver's updating realtime position, matching eligible drivers based on an efficient matching algorithm, etc.
 
 - ### Database Design ###
-
+Both of the two services mentioned hava their own database which is implemented in PostgreSQl. The design of the databases is listed as follows:
+<p align="center">
+<img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Database_of_Dispatch_Service.png" alt="drawing" width="500"/>
+</p>
+<p align="center">Database Design of Dispatch Service</p>
+For the Dispatch Service, there are three tables inside its database. The trip table is used to store the detailed information of trips, with two foreign keys, the trip table is linked to the driver table whick stores the information of drivers and the user table which stores the information of users.
+<p align="center">
+<img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Database_of_Geo_Service.png" width="500"/>
+</p>
+<p align="center">Database Design of Geo Service</p>
+For the Geo Service, there are 
 - 
 ## Test
