@@ -99,7 +99,10 @@ def sort_nearest_drivers(drivers):
     '''
     for index in range((len(drivers)-2)//2,-1,-1):
         bubble_down(drivers,index)
-    return drivers[0:10]
+    for i in range(10):
+        swap(drivers,0,len(drivers)-1-i)
+        bubble_down(drivers,0,len(drivers)-1-i)
+    return drivers[-1:-11:-1]
 
 def find_nearest_drivers(pickup_location,distance=4):
     drivers = []
