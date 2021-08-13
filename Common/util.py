@@ -13,17 +13,19 @@ def swap(l,index1,index2):
         l[index1],l[index2] = l[index2],l[index1]
         return index2
 
-def bubble_down(drivers, index):
+def bubble_down(drivers, index, length=None):
     '''
     helper function for the heap sort of drivers
     :param drivers:
     :param index:
     :return:
     '''
+    if not length:
+        length = len(drivers)
     left_child_index = index * 2 + 1
     right_child_index = index * 2 + 2
-    if left_child_index < len(drivers):
-        if right_child_index < len(drivers):
+    if left_child_index < length:
+        if right_child_index < length:
             if drivers[index].distance > drivers[left_child_index].distance \
                     or drivers[index].distance > drivers[right_child_index].distance:
                 index = swap(drivers, index, left_child_index) \
@@ -62,4 +64,3 @@ def verify_token_and_return_data(token):
         return None
     except BadSignature:
         return None
-

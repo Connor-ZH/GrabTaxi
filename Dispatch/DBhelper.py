@@ -74,7 +74,7 @@ class Helper:
     @log_error_db
     def insert_data_into_driver_table(self):
         query = "COPY driver_table(driver_id,driver_name,status,phone_number,password)" \
-                "FROM 'driver_data.csv'" \
+                "FROM '/Users/connor-zh/Desktop/MyProject/Grab_Projects/GrabTaxi/Dispatch/driver_data.csv'" \
                 "DELIMITER ','" \
                 "CSV HEADER"
         self.cursor.execute(query)
@@ -204,3 +204,4 @@ class Helper:
         self.cursor.execute(query)
         user_id = self.cursor.fetchall()[0][0]
         return user_id
+

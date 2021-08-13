@@ -43,7 +43,10 @@ def sort_nearest_drivers(drivers):
     '''
     for index in range((len(drivers)-2)//2,-1,-1):
         bubble_down(drivers,index)
-    return drivers[0:10]
+    for i in range(10):
+        swap(drivers,0,len(drivers)-1-i)
+        bubble_down(drivers,0,len(drivers)-1-i)
+    return drivers[-1:-11:-1]
 
 def find_nearest_drivers(pickup_location,distance=4):
     drivers = []
@@ -63,7 +66,7 @@ def update_driver_location(driver_id,longitude,latitude, with_filter=True):
         DBhelper.update_driver_location(driver_id, longitude, latitude)
         return
     pre_longitude, pre_latitude = filter.get_driver_location(driver_id)
-    if np.random.choice([True,False], 1,replace=True, p=[0.2, 0.8]):
+    if np.random.choice([True,False], 1,replace=True, p=[0.2, 0.8]) and pre_latitude and pre_longitude:
         longitude = pre_longitude
         latitude = pre_latitude
     if (pre_latitude == None and pre_latitude == None) or (pre_longitude != longitude or pre_latitude != latitude):
