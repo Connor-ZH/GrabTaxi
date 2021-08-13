@@ -2,4 +2,4 @@
 */__pycache__/
 /venv/
 test.py
-/redis-6.2.5/
+redis_software/
