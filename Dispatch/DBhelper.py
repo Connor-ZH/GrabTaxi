@@ -80,7 +80,7 @@ class Helper:
         self.cursor.execute(query)
         self.connection.commit()
 
-    @log_error_db
+
     def create_driver_table(self):
         # create_driver_table
         query = "CREATE TABLE driver_table(" \
@@ -92,7 +92,7 @@ class Helper:
         self.cursor.execute(query)
         self.connection.commit()
 
-    @log_error_db
+
     def create_user_table(self):
         # create_user_table
         query = "CREATE TABLE user_table(" \
@@ -204,4 +204,3 @@ class Helper:
         self.cursor.execute(query)
         user_id = self.cursor.fetchall()[0][0]
         return user_id
-

@@ -25,7 +25,7 @@ class Helper:
                                   )
         self.cursor = self.connection.cursor()
 
-    @log_error_db
+
     def create_driver_location_table(self):
         query = "CREATE TABLE driver_location_table(" \
                 "driver_id BIGSERIAL PRIMARY KEY," \
@@ -114,5 +114,3 @@ class Helper:
         longitude = float(location[0])
         latitude = float(location[1])
         return longitude, latitude
-
-
