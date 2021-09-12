@@ -36,7 +36,6 @@ def booking():
             return redirect(url_for('show_trip', trip_id=trip_id))
         return redirect(url_for('login'))
 
-
 @app.route('/show_trip/<trip_id>', methods=['GET', 'POST'])
 def show_trip(trip_id=None):
     return render_template('show_booking_result.html', trip_id=trip_id)
