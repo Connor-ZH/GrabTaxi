@@ -204,4 +204,3 @@ class Helper:
         self.cursor.execute(query)
         user_id = self.cursor.fetchall()[0][0]
         return user_id
-
