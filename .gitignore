@@ -4,3 +4,4 @@
 test.py
 .DS_Store
 /redis-6.2.5
+.vscode

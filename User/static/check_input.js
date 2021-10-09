@@ -1,9 +1,5 @@
 const submitHandler = document.querySelector(".submit");
 
-// check point
-console.log("checkpoint");
-console.log(submitHandler);
-
 if (submitHandler === null) {
     console.log("submitHandler is null");
 } else {

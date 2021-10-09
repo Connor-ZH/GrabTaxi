@@ -2,28 +2,41 @@
 <html>
 <head>
     <script src="../static/check_input.js" defer></script>
+    <link rel="stylesheet" href="../static/booking.css">
 </head>
 
 <body onload="check_token()">
-    <div id="datetime">
-    <script type="text/javascript" src="../static/show_current_time.js"></script>
+    <div class="header">
+        <div id="datetime">
+        <script type="text/javascript" src="../static/show_current_time.js"></script>
+        </div>
+
+        <h4>We haven't incorporated the real-world map or Google Map system with this project since it is not the feature we tend to implement at current development stage. </h4>
+        <h4>As a demo aligned with the designed database information, we have assigned each location with an integer value ranging from 0 to 90, both inclusive.</h4>
+
+        <div class="healthStatus">
+            <h3>Health Monitoring</h3>
+            <p>Body temperature: 37.1 degrees Celcius.</p>
+            <p>Pulse rate: 79 beats per minute.</p>
+        </div>
     </div>
-    <form method="POST">	
+
+    <div class="makeTrip">
         <h2>Hi! Please make your trip </h2>
-        <br>
-    	<p>longitude of pick-up position:
-            <input type="text" name="long_of_pickup" class="long_of_pickup"></p>
-        <p>latitude of pick-up position:    
-            <input type="text" name="lati_of_pickup" class="lati_of_pickup"></p>
-    	<p>longitude of drop-off position:
-            <input type="text" name="long_of_dropoff" class="long_of_dropoff"></p>
-        <p>latitude of drop-off position:    
-            <input type="text" name="lati_of_dropoff" class="long_of_dropoff"></p>
-        <input type="hidden" id="token" name="token" value="1">
-        <p><input type="submit" value="Upload my trip" class="submit"></p>
-    </form>
-    <script type="text/javascript" src="../static/check_token.js">
-    </script>
+        <form method="POST">	
+            <label for="logi_pickup">longitude of pick-up position:</label>
+            <input type="text" name="long_of_pickup" class="long_of_pickup">
+            <label for="lati_pickup">latitude of pick-up position:</label>
+            <input type="text" name="lati_of_pickup" class="lati_of_pickup">
+            <label for="logi_dropoff">longitude of drop-off position:</label>
+            <input type="text" name="long_of_dropoff" class="long_of_dropoff">
+            <label for="lati_dropoff">latitude of drop-off position:</label>    
+            <input type="text" name="lati_of_dropoff" class="long_of_dropoff">
+            <input type="hidden" id="token" name="token" value="1">
+            <button type="submit" class="submit">Upload my trip</button>
+        </form>
+    </div>
+    <script type="text/javascript" src="../static/check_token.js"></script>
     <script>
         document.getElementById("token").value = localStorage.getItem("token");;
     </script>
