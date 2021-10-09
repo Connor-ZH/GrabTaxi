@@ -38,7 +38,7 @@ class Helper:
     @log_error_db
     def insert_data_into_table(self):
         query = "COPY driver_location_table(driver_id,longitude,latitude,zone)" \
-                "FROM 'D:/NUS CS/Taxi Project/GrabTaxi/Geo/data.csv'" \
+                "FROM 'GRABTAXI/Geo/data.csv'" \
                 "DELIMITER ','" \
                 "CSV HEADER"
         self.cursor.execute(query)
