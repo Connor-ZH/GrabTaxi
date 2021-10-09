@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html>
+<head>    
+    <link rel="stylesheet" href="../static/signup.css">
+</head>
+
 <body>
-<form method="POST">
-    <h>Hi! Please sign up <h>
-    <br>                
-    <label for="characters">Choose your character:</label>
-    <select name="character">
-        <option value="user">user</option>
-        <option value="driver">driver</option>
-    </select>
-    <br>
-    <p>name <input type="text" name="name"></p>
-    <br>
-    <p>password <input type="text" name="password"></p>
-    <br>
-    <p>phone number <input type="text" name="phone_number"></p>
-    <br>
-    <p><input type="submit" value="sign up"></p>
-</form>
+
+    <div class="header">
+        <h2>No Matter <span style="color: white;">Where You Are</span></h2>
+        <h2>I Will Be There <span style="color: white;">For You</span></h2>
+    </div>
+
+    <div class="row">
+        <div class="column">
+            <img src="../static/pics/img1.jpg" style="width: 100%;">
+            <img src="../static/pics/img2.jpg" style="width: 100%;">
+        </div>
+
+        <div class="column">
+            <img src="../static/pics/img3.jpg" style="width: 100%;">
+            <img src="../static/pics/img4.jpg" style="width: 100%;">
+        </div>
+    </div>
+    <div class="signup">
+        <h4>Please Sign Up Here</h4>
+        <form method="POST">
+            <select class="character">
+                <option value="user">Sign Up As Rider</option>
+                <option value="driver">Sign Up As Driver</option>
+            </select><br><br>
+            <input type="text" name="name" placeholder="Enter Username">
+            <input type="text" name="password" placeholder="Enter Password">
+            <input type="text" name="phone_number" placeholder="Enter Phone Number"><br>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
 </body>
 </html>

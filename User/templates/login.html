@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="../static/login.css">
+</head>
 <body>
-    <h>Hi! Please log in <h>
-    <p >username <input type="text" id="user_name"></p>
+    <div class="header">
+        <div class="logo">
+            <h1>
+                TrueNoob
+                <span style="color: white;">Taxi</span>
+            </h1>
+        </div>
+        <div class="banner">
+            <h2>We Will Take You</h2>
+            <h2 style="color: #ffcc33;">Wherever You Need</h2>
+        </div>
+    </div>
     <br>
-    <p >password <input type="text" id="password"></p>
-    <br>
-    <button id="button" onclick="login('{{host}}','{{port}}')">Confirm</button>
-    <script type="text/javascript" src="../static/login.js">
-    </script>
+    <div class = "main">
+        <div class="about">
+            <h3 class="welcome">Welcome to Our TrueNoob Taxi</h3>
+            <h4>The Birds Into The Wood Have Flown</h4>
+            <p>The office jack's career is blighted,</p>
+            <p>The rich man's fortune now all vanished,</p>
+            <p>The kind with life have been requited,</p>
+            <p>The cruel exemplarily punished;</p>
+            <br>
+            <p>The one who owned a life is dead,</p>
+            <p>The tears one owned have all been shed.</p>
+            <P>Wrongs suffered have the wrongs done expiated;</P>
+            <p>The couplings and the sundering were fated.</p>
+            <p>Untimely death sin in some past life shows,</p>
+            <p>But only luck a blest old age bestows.</p>
+            <br>
+            <p>The disillusioned to their convents fly,</p>
+            <p>The still deluded miserably die.</p> 
+            <p>Like birds who, having fed, to the woods repair,</p> 
+            <p>They leave the landscape desolate and bare.</p>
+        </div>
+        <div class="login">
+            <h4>Life Is Short, You Need Login</h4>
+            <select class="character">
+                <option value="user">Log In As Rider</option>
+                <option value="driver">Log In As Driver</option>
+            </select><br><br>
+            <input type="text" id="user_name" placeholder="Enter Username"><br>
+            <input type="text" id="password" placeholder="Enter Password"><br>
+            <button id="button" onclick="login('{{host}}','{{port}}')">Login</button>
+            <p>If you don't have an account yet, please sign up <a href="/signup" style="color: #ffcc33; font-style: italic;">here</a></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../static/login.js"></script>
 </body>
 </html>
