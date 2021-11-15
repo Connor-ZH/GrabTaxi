@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h2>Hi! Please make your trip <h>
-<br></br>
-<div id="datetime">
-<script type="text/javascript" src="../static/show_current_time.js"></script>
-</div>
-<div class="content">
-{% block content %}
-{% endblock %}
-</div>
-</body>
+    <head>
+        <link rel="stylesheet" href="../static/layout.css">
+    </head>
+    <body>
+        <div class="header">
+            <h2>Hi! Please make your trip <h>
+                <br>
+                <div id="datetime">
+                <script type="text/javascript" src="../static/show_current_time.js"></script>
+                </div>
+        </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
 </html>
