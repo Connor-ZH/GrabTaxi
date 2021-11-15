@@ -38,7 +38,7 @@ if (submitHandler === null) {
         }
     }
 }
-=======
+
 const submitHandler = document.querySelector(".submit");
 
 // check point
