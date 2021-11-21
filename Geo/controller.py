@@ -75,5 +75,3 @@ def update_driver_location(driver_id,longitude,latitude, with_filter=True):
         longitude_in_redis, latitude_in_redis = redis.get_driver_location_without_database(driver_id)
         if longitude_in_redis != None:
             redis.update_driver_location(driver_id,longitude,latitude)
-
-

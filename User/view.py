@@ -87,7 +87,7 @@ def sign_up():
         phone_number = request.form["phone_number"]
         character = request.form["character"]
         controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
+        return redirect(url_for('booking'))
 
 @app.route('/review', methods=['GET', 'POST'])
 def review():
@@ -99,19 +99,20 @@ def review():
     #     phone_number = request.form["phone_number"]
     #     character = request.form["character"]
     #     controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
+        return redirect(url_for('booking'))
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
+        print("checkpoint")
         return render_template('chat.html')
-    elif request.method == 'POST':
-    #     name = request.form["name"]
-    #     password = request.form['password']
-    #     phone_number = request.form["phone_number"]
-    #     character = request.form["character"]
-    #     controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
+    else:
+        token = request.headers.get("token")
+        trip_id = controller.create_message(token)
+        if trip_id:
+            return ('', 204)  # return no content
+        return redirect(url_for("login"))
+
 
 if __name__ == '__main__':
     app.run(host=config.host, port=config.port)

@@ -1,4 +1,4 @@
-
+<!-- 
 <h>Hi, please talk to your driver</h>
 <style>
 div {
@@ -36,5 +36,39 @@ Chat Box:
 <button>Send</button>
 <button onclick="back('{{host}}','{{port}}','{{trip_id}}')" >Back</button>
 </body>
+<script type="text/javascript" src="../static/chat.js"></script> -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/chat.css">
+  </head>
+
+  <body>
+    <div class="header">
+      <h2>Please be patient and driver is on the way to you in a moment.</h2>
+      <h2>Leave a message here!</h2>
+      <br>
+    </div>
+    <br><br>
+    <div class="outerBox">
+      <div class="innerBox" id="driver">
+          <p>Hello, I am your driver. Nice to meet you!</p></br>
+          <p>I am on the way to picking you up in a moment.</p></br>
+          <p>If you have any queries, </p></br>
+          <p>please leave me a message. Thanks!</p></br>
+      </div>
+
+      <form method="POST">
+        <textarea id="txt" name="text" placeholder="write your message here"></textarea>
+      </form>
+      <br>
+      <button id="btn" name="submit" onclick="sendMessage('{{host}}','{{port}}')">Send</button>
+      <button id="backBtn" onclick="back('{{host}}','{{port}}','{{trip_id}}')" >Go Back</button>
+    </div>
+  </body>
+</html>
+
 <script type="text/javascript" src="../static/chat.js"></script>
+<script type="text/javascript" src="../static/check_token.js"></script>
 

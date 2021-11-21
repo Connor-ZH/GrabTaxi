@@ -89,3 +89,6 @@ def sign_up_user(user_name,password,phone_number):
 def sign_up_driver(driver_name,password,phone_number):
     DBhelper.insert_driver(driver_name,password,phone_number)
 
+def get_trip_id(user_id):
+    trip_id = DBhelper.get_trip_id(user_id)
+    return trip_id
