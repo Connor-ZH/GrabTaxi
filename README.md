@@ -22,7 +22,7 @@ Generally, this project is mainly written in **Python** using **Flask** with **M
 <img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Service_structure.png" alt="drawing" width="500"/>
 </p>
 <p align="center">Service Structure Diagram</p>
-As seen in the diagram, considering the load balance in the real life scenario, the service struture of this project consists of two services, which are Dispatch Service and Geo Service. Dispatach Service is responsible for handling the basic business logic like processing user's request, driver's answer and so on, while Geo Service is reponsible for handling the request of driver's updating realtime position, matching eligible drivers based on an efficient matching algorithm, etc.
+As seen in the diagram, considering the load balance in the real life scenario, the service struture of this project consists of two services, which are Dispatch Service and Geo Service. Dispatch Service is responsible for handling the basic business logic like processing user's request, driver's answer and so on, while Geo Service is reponsible for handling the request of driver's updating realtime position, matching eligible drivers based on an efficient matching algorithm, etc.
 
 - ### Database Design ###
 Both of the two services mentioned hava their own database which is implemented in PostgreSQl. The design of the databases is listed as follows:
@@ -42,7 +42,7 @@ For the Geo Service, there are 101 tables inside its database. Among those 101 t
 <img align="center" src="https://github.com/Connor-ZH/GrabTaxi/blob/master/Diagrams/Design of Double Redis Structure.png" width="600"/>
 </p>
 <p align="center">Design of Double Redis Structure</p>
-As seen in the diagram, a Read/Write Splitting Double Redis structure is implemented in this project to cut down the QPS of database server as well as speed up the process of updating driver location query from user. A redis is used as a filter to filter out the driver's request which is going to update the same position. This idea comes from the real life scenario where driver may stay at the same position due to traffic jam. Another redis is used for users to subscribe their driver's position. A driver id key will be created in the redis once the driver accepts the trip. From then on, the filter will keep updating the driver location in this redis if the corresponding driver key is inside the redis so that the redis does not send query to database too much. Once the trip is done, the corresponding driver id key will be removed from the redis.
+As seen in the diagram, a Read/Write Splitting Double Redis structure is implemented in this project to cut down the QPS of database server as well as speed up the process of updating driver location query from user. A redis is used as a filter to filter out the driver's request which is going to update the same position. This idea comes from the real life scenario where driver may stay at the same position due to traffic jam. Another redis is used for users to subscribe to their driver's position. A driver id key will be created in the redis once the driver accepts the trip. From then on, the filter will keep updating the driver location in this redis if the corresponding driver key is inside the redis so that the redis does not send query to database too much. Once the trip is done, the corresponding driver id key will be removed from the redis.
 
 - ### Design of Driver Matching Algorithm ###
 An efficient driver matching algorithm is put forward in this project which is used to optimize the speed of matching the neraest drivers for the user. Instard of searching the whole driver location table, the driver location table is splited into different zone tables according to their location for searching.
@@ -99,7 +99,10 @@ def sort_nearest_drivers(drivers):
     '''
     for index in range((len(drivers)-2)//2,-1,-1):
         bubble_down(drivers,index)
-    return drivers[0:10]
+    for i in range(10):
+        swap(drivers,0,len(drivers)-1-i)
+        bubble_down(drivers,0,len(drivers)-1-i)
+    return drivers[-1:-11:-1]
 
 def find_nearest_drivers(pickup_location,distance=4):
     drivers = []
@@ -112,4 +115,6 @@ def find_nearest_drivers(pickup_location,distance=4):
     return sorted_drivers
 ```
 So far, the matching algorithm is done.
+- ### Design of Token-Based Authentication ###
+Since http is a stateless protocol, it would be difficult for server to keep track of user’s state information. And this may result in a bad user experience. For example, to do the identity verification, the user may need to log in for every web page in a shopping platform. One feasible and popular solution to this problem would be making use of cookie and session. In the scenario of identity verification, user only needs to log in for once and the server would store the user status as session on the server side and return the session id as cookie which would be stored on the user side. After that, every time when user send http requests to the platform, the requests would automatically carry the cookie. As a result, server would be able to extract the cookie from the user’s requests and map it to the corresponding session to get the user state information. However, this solution would be considered as defective due to the following reasons: Firstly, for the sake of information safety, Hackers can get user’s cookie by Cross-Site Scripting and deceive the server with the cookie hacked. Apart from that, by the technique of Cross Site Request Forgery, hackers can also trick a web browser into sending unwanted requests which may make the user lose money or something. Secondly, considering a scenario that our system is built on distributed server architecture, it would be a challenge for servers to store and share the session across multi-servers, otherwise the other servers cannot keep track of user’s state. To tackle those issues, there is a more reliable and efficient approach called token-based authentication. The implementation details are as follows: The user’s state information together signature provided by server would be encrypted and passed to user’s local storage by server. And every time the token would be set as one of the headers of the http requests when user side is trying to call some sensitive interface. With the token extracted from user’s request, the server would be able to decrypt the token and verify the identity of users. The major difference between token and cookie is that token won’t be sent by web browsers automatically so that we should not care about the problem of Cross Site Request Forgery or the Cross-Site Scripting. Besides, since the server side does not store any information about the user state, our distributed server structure will not have the problem of sharing session and it would also help save the memory of server.
 

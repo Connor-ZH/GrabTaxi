@@ -80,7 +80,7 @@ function startTimer(host,port,driver_id){
 function update_trip_status(trip_id,status){
     if (status==Trip_status.Finished){
         localStorage.removeItem("trip_ongoing");
-        var url = 'http://'+window.location.host+'/booking';
+        var url = 'http://'+window.location.host+'/review';
         window.location.replace(url);
     }
     var xhr = new XMLHttpRequest();

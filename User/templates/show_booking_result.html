@@ -1,17 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<h>Hi, your trip id is {{trip_id}}</h>
+<!DOCTYPE html>
+<html>
+<head>    
+    <link rel="stylesheet" href="../static/show_trip.css">
+</head>
 
 <body onload="check_token(true)">
-    <br>
+    <h2>Welcome aboard! your trip id is {{trip_id}}</h2>
     <button id="button" onclick="search_driver('{{host}}','{{port}}','{{trip_id}}')">
         View detail
+    </button>
+    <br><br>
+    <button id="button" onclick="chat('{{host}}','{{port}}','{{trip_id}}')">
+    Talk to my driver
     </button>
     <br>
 </body>
 <script type="text/javascript" src="../static/update_trip_status.js"></script>
 <script type="text/javascript" src="../static/check_token.js"></script>
+<script type="text/javascript" src="../static/chat.js"></script>
 <script> 
     localStorage.setItem("trip_id",'{{trip_id}}');
 </script>
