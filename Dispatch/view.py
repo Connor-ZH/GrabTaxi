@@ -31,6 +31,9 @@ def verify_password_user(user_name,password):
 def get_user_id(user_name):
     return controller.get_user_id(user_name)
 
+def update_trip_review(trip_id,review):
+    controller.update_trip_review(trip_id,review)
+
 def sign_up_driver(driver_name, password, phone_number):
     controller.sign_up_driver(driver_name, password, phone_number)
     return

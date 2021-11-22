@@ -1,5 +1,6 @@
 from flask import Flask,make_response,url_for,request,render_template,session,redirect
 from Dispatch import view as dispatch_service
+from Health import view as health_service
 from Message import view as message_service
 from Common.enum import *
 from Common.util import *
@@ -22,19 +23,26 @@ def create_trip(token):
     trip_id = dispatch_service.create_trip(location_pickup,location_dropoff,user_id)
     return trip_id
 
-def create_message(token):
+def create_message(token,driver_id,trip_id):
     token_data = verify_token_and_return_data(token)
     if token_data == None:
         return None
     user_id = token_data["user_id"]
     # find the trip id based on the user_id and trip status
-    trip_id = dispatch_service.get_trip_id(user_id)
-    content = request.form["text"]
-    message_service.create_message(trip_id, content)
+    message_service.create_message(trip_id, user_id, driver_id)
     return trip_id
 
-def get_driver_id(trip_id):
+def update_user_content(token,content):
+    token_data = verify_token_and_return_data(token)
+    if token_data == None:
+        return None
+    user_id = token_data["user_id"]
+    trip_id = dispatch_service.get_trip_id(user_id)
+    message_service.update_user_content(trip_id,  content)
+
+def get_driver_id(token,trip_id):
     driver_id = dispatch_service.get_driver_id(trip_id)
+    create_message(token,driver_id,trip_id)
     return driver_id
 
 def get_driver_location(driver_id):
@@ -45,6 +53,11 @@ def get_driver_detail(driver_id):
     driver_detail = dispatch_service.get_driver_detail(driver_id)
     return driver_detail
 
+def get_user_health_status(token):
+    user_id = verify_token_and_return_data(token)["user_id"]
+    pulse, temperature, updated_at, status = health_service.get_user_health_status(user_id)
+    return pulse, float(temperature), updated_at, status
+
 def update_trip_status(trip_id,status):
     status = Trip_status(status)
     dispatch_service.update_trip_status(trip_id,status)
@@ -54,3 +67,6 @@ def sign_up(character,name,password,phone_number):
         dispatch_service.sign_up_user(name,password,phone_number)
     elif character == "driver":
         dispatch_service.sign_up_driver(name,password,phone_number)
+
+def update_trip_review(trip_id, review):
+    dispatch_service.update_trip_review(trip_id,review)

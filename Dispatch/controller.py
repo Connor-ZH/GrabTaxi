@@ -83,6 +83,9 @@ def get_user_id(user_name):
     user_id = DBhelper.get_user_id(user_name)
     return user_id
 
+def update_trip_review(trip_id, review):
+    DBhelper.update_trip_review(trip_id,review)
+
 def sign_up_user(user_name,password,phone_number):
     DBhelper.insert_user(user_name,password,phone_number)
 
@@ -92,3 +95,4 @@ def sign_up_driver(driver_name,password,phone_number):
 def get_trip_id(user_id):
     trip_id = DBhelper.get_trip_id(user_id)
     return trip_id
+

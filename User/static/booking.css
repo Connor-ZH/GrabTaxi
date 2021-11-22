@@ -1,7 +1,7 @@
 .header {
     position: relative;
     width: 100%;
-    height: 450px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,7 +47,7 @@
 .healthStatus {
     width: fit-content;
     background-color: rgba(139, 135, 135, 0.4);
-    border-radius: 60px;
+    border-radius: 10px;
     text-align: center;
 }
 
