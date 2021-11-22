@@ -1,10 +1,7 @@
 from flask import Flask,make_response,url_for,request,render_template,session,redirect
 from Dispatch import view as dispatch_service
-<<<<<<< HEAD
 from Health import view as health_service
-=======
 from Message import view as message_service
->>>>>>> backup
 from Common.enum import *
 from Common.util import *
 

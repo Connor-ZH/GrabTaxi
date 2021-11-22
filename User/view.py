@@ -106,44 +106,22 @@ def review():
     if request.method == 'GET':
         return render_template('review.html')
     elif request.method == 'POST':
-<<<<<<< HEAD
-        #     name = request.form["name"]
-        #     password = request.form['password']
-        #     phone_number = request.form["phone_number"]
-        #     character = request.form["character"]
-        #     controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
-=======
     #     name = request.form["name"]
     #     password = request.form['password']
     #     phone_number = request.form["phone_number"]
     #     character = request.form["character"]
     #     controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('booking'))
->>>>>>> backup
-
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
         return render_template('chat.html')
-<<<<<<< HEAD
-    elif request.method == 'POST':
-        #     name = request.form["name"]
-        #     password = request.form['password']
-        #     phone_number = request.form["phone_number"]
-        #     character = request.form["character"]
-        #     controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
-=======
     else:
         token = request.headers.get("token")
         user_content = request.form["txt"]
         controller.update_user_content(token,user_content)
         return ('', 204)  # return no content
-
->>>>>>> backup
-
 
 if __name__ == '__main__':
     app.run(host=config.host, port=config.port)
