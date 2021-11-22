@@ -45,7 +45,8 @@ def show_trip(trip_id=None):
 @verify_token
 def search_driver():
     trip_id = request.form["trip_id"]
-    driver_id = controller.get_driver_id(trip_id)
+    token = request.form["token"]
+    driver_id = controller.get_driver_id(token,trip_id)
     return str(driver_id)
 
 
@@ -104,14 +105,12 @@ def review():
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
-        print("checkpoint")
         return render_template('chat.html')
     else:
         token = request.headers.get("token")
-        trip_id = controller.create_message(token)
-        if trip_id:
-            return ('', 204)  # return no content
-        return redirect(url_for("login"))
+        user_content = request.form["txt"]
+        controller.update_user_content(token,user_content)
+        return ('', 204)  # return no content
 
 
 if __name__ == '__main__':

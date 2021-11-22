@@ -1,5 +1,10 @@
 from Message import controller as controller
 
+def create_message(trip_id, user_id, driver_id):
+    controller.insert_message(trip_id, user_id, driver_id)
 
-def create_message(trip_id, content):
-    controller.insert_message(trip_id, content)
+def update_user_content(trip_id, driver_content):
+    controller.update_driver_content(trip_id,driver_content)
+
+def update_driver_content(trip_id, driver_content):
+    controller.update_driver_content(trip_id, driver_content)
