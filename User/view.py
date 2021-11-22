@@ -106,11 +106,9 @@ def review():
     if request.method == 'GET':
         return render_template('review.html')
     elif request.method == 'POST':
-    #     name = request.form["name"]
-    #     password = request.form['password']
-    #     phone_number = request.form["phone_number"]
-    #     character = request.form["character"]
-    #     controller.sign_up(character, name, password, phone_number)
+        trip_id = request.form["trip_id"]
+        review_content = request.form["review"]
+        controller.update_trip_review(trip_id,review_content)
         return redirect(url_for('booking'))
 
 @app.route('/chat', methods=['GET', 'POST'])

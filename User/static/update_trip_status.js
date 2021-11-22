@@ -7,6 +7,7 @@ var Trip_status = {
 
 function search_driver(host,port,trip_id) {
     localStorage.setItem("trip_ongoing","true");
+    localStorage.setItem("trip_id",trip_id);
     window.trip_id = trip_id;
     var xhr = new XMLHttpRequest();
     var url = 'http://'+window.location.host+'/search_driver';

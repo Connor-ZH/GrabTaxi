@@ -67,3 +67,6 @@ def sign_up(character,name,password,phone_number):
         dispatch_service.sign_up_user(name,password,phone_number)
     elif character == "driver":
         dispatch_service.sign_up_driver(name,password,phone_number)
+
+def update_trip_review(trip_id, review):
+    dispatch_service.update_trip_review(trip_id,review)

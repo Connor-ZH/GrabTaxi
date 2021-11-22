@@ -66,8 +66,17 @@ class Helper:
                 "status smallint," \
                 "driver_id_refused BIGINT[]," \
                 "pickup_location DECIMAL[]," \
-                "dropoff_location DECIMAL[]" \
+                "dropoff_location DECIMAL[]," \
+                "review TEXT" \
                 ");"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def update_trip_review(self,trip_id, review):
+        review = str(review)
+        query = "UPDATE trip_table " \
+                f"SET review = '{review}'" \
+                f"WHERE trip_id = '{trip_id}';"
         self.cursor.execute(query)
         self.connection.commit()
 
