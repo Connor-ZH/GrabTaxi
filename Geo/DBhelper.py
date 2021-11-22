@@ -70,6 +70,23 @@ class Helper:
                 nearby_drivers.append(driver)
         return nearby_drivers
 
+    # get the near by drivers if there is no sub searching zones (for perfomance check)
+    @log_error_db
+    def get_nearby_drivers_without_search_zones(self, longitude, latitude, distance):
+        nearby_drivers = []
+        for zone in range(100):
+            query = (f"select * from driver_of_zone{zone} "
+                     f"where longitude < {longitude + distance} "
+                     f" and longitude > {longitude - distance}"
+                     f" and latitude > {latitude - distance}"
+                     f" and latitude < {latitude + distance}")
+            self.cursor.execute(query)
+            for record in self.cursor:
+                driver = Driver(record[0], [record[1], record[2]])
+                driver.calculate_distance([longitude, latitude])
+                nearby_drivers.append(driver)
+        return nearby_drivers
+
     @log_error_db
     def update_driver_location(self, driver_id, longitude, latitude):
         query = ("SELECT zone FROM driver_location_table "

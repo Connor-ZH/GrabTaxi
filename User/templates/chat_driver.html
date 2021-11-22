@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/chat_driver.css">
+  </head>
+
+  <body>
+    <div class="header">
+      <h2>Please be patient and driver is on the way to you in a moment.</h2>
+      <h2>Leave a message here!</h2>
+      <br>
+    </div>
+    <br><br>
+    <div class="outerBox">
+      <div class="innerBox" id="driver">
+          <p>Hello, I am your driver. Nice to meet you!</p></br>
+          <p>I am on the way to picking you up in a moment.</p></br>
+          <p>If you have any queries, </p></br>
+          <p>please leave me a message. Thanks!</p></br>
+      </div>
+
+      <form method="POST">
+        <textarea id="txt" name="text" placeholder="write your message here"></textarea>
+      </form>
+      <br>
+      <button id="btn" onclick="sendMessage()">Send</button>
+      <button id="backBtn" onclick="back('{{host}}','{{port}}','{{trip_id}}')" >Go Back</button>
+    </div>
+  </body>
+</html>
+
+<script>
+  var btn = document.getElementById("btn");
+  var txt = document.getElementById("txt");
+  var driver = document.getElementById("driver");
+  var p = document.getElementById("p");
+
+  function sendMessage() {
+    if (txt.value == "") {
+      alert("Please don't send blank message!");
+    } else {
+      var user = document.createElement("p");
+      user.style.backgroundColor="#dcdcdc";
+      user.style.clear="both";
+      user.style.float="left";
+      user.style.marginLeft="15px";
+      user.innerText = txt.value;
+      driver.appendChild(user);
+      txt.value="";
+      user.scrollIntoView();
+    }
+  }
+</script>
