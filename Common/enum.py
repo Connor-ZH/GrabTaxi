@@ -22,3 +22,6 @@ class Driver_answer(Enum):
     Already_refused = 3
     Busy = 4
 
+class Health_status(Enum):
+    Normal = 1
+    Abnormal = 0

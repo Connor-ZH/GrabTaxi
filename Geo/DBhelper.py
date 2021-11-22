@@ -3,29 +3,29 @@ from Common.util import *
 import psycopg2
 from Common.decorator import *
 
+
 class Driver:
-    def __init__(self,id,location):
+    def __init__(self, id, location):
         self.location = location
         self.id = id
         self.distance = None
 
-    def calculate_distance(self,pickup_location):
+    def calculate_distance(self, pickup_location):
         # calculate the distance to rider
-        self.distance = (abs(float(pickup_location[0]-self.location[0]))**2 +
-                         abs(float(pickup_location[1]-self.location[1]))**2)**0.5
+        self.distance = (abs(float(pickup_location[0] - self.location[0])) ** 2 +
+                         abs(float(pickup_location[1] - self.location[1])) ** 2) ** 0.5
         return self.distance
 
 
 class Helper:
     def __init__(self):
         self.connection = psycopg2.connect(database=config.database_name,
-                                  user=config.user_name,
-                                  password=config.password,
-                                  port=config.port,
-                                  )
+                                           user=config.user_name,
+                                           password=config.password,
+                                           port=config.port,
+                                           )
         self.cursor = self.connection.cursor()
 
-    @log_error_db
     def create_driver_location_table(self):
         query = "CREATE TABLE driver_location_table(" \
                 "driver_id BIGSERIAL PRIMARY KEY," \
@@ -38,7 +38,7 @@ class Helper:
     @log_error_db
     def insert_data_into_table(self):
         query = "COPY driver_location_table(driver_id,longitude,latitude,zone)" \
-                "FROM '/private/tmp/data.csv'" \
+                "FROM 'GRABTAXI/Geo/data.csv'" \
                 "DELIMITER ','" \
                 "CSV HEADER"
         self.cursor.execute(query)
@@ -55,7 +55,7 @@ class Helper:
             self.connection.commit()
 
     @log_error_db
-    def get_nearby_drivers(self,longitude, latitude, distance, search_zones):
+    def get_nearby_drivers(self, longitude, latitude, distance, search_zones):
         nearby_drivers = []
         for zone in search_zones:
             query = (f"select * from driver_of_zone{zone} "
@@ -71,12 +71,12 @@ class Helper:
         return nearby_drivers
 
     @log_error_db
-    def update_driver_location(self,driver_id,longitude,latitude):
+    def update_driver_location(self, driver_id, longitude, latitude):
         query = ("SELECT zone FROM driver_location_table "
                  f"WHERE driver_id = {driver_id} ")
         self.cursor.execute(query)
         origin_zone = self.cursor.fetchall()[0][0]
-        new_zone = find_zone(longitude,latitude)
+        new_zone = find_zone(longitude, latitude)
         if origin_zone == new_zone:
             # update the driver location in the corresponding driver_of_zone_table
             query = (f"UPDATE driver_of_zone{origin_zone} "
@@ -106,7 +106,7 @@ class Helper:
         self.connection.commit()
 
     @log_error_db
-    def get_driver_location(self,driver_id):
+    def get_driver_location(self, driver_id):
         query = "SELECT longitude, latitude FROM driver_location_table " \
                 f"WHERE driver_id = {driver_id}"
         self.cursor.execute(query)
@@ -114,5 +114,3 @@ class Helper:
         longitude = float(location[0])
         latitude = float(location[1])
         return longitude, latitude
-
-

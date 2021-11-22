@@ -1,5 +1,6 @@
 from flask import Flask,make_response,url_for,request,render_template,session,redirect
 from Dispatch import view as dispatch_service
+from Message import view as message_service
 from Common.enum import *
 from Common.util import *
 
@@ -19,6 +20,17 @@ def create_trip(token):
         return None
     user_id = token_data["user_id"]
     trip_id = dispatch_service.create_trip(location_pickup,location_dropoff,user_id)
+    return trip_id
+
+def create_message(token):
+    token_data = verify_token_and_return_data(token)
+    if token_data == None:
+        return None
+    user_id = token_data["user_id"]
+    # find the trip id based on the user_id and trip status
+    trip_id = dispatch_service.get_trip_id(user_id)
+    content = request.form["text"]
+    message_service.create_message(trip_id, content)
     return trip_id
 
 def get_driver_id(trip_id):
