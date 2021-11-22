@@ -36,6 +36,7 @@ def booking():
             return redirect(url_for('show_trip', trip_id=trip_id))
         return redirect(url_for('login'))
 
+
 @app.route('/show_trip/<trip_id>', methods=['GET', 'POST'])
 def show_trip(trip_id=None):
     return render_template('show_booking_result.html', trip_id=trip_id)
@@ -77,6 +78,7 @@ def update_trip_status():
     controller.update_trip_status(trip_id, status)
     return "Done with updating trip status"
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
@@ -89,29 +91,40 @@ def sign_up():
         controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('index'))
 
+
+@app.route('/get_user_health_status', methods=['GET', 'POST'])
+def get_user_health_status():
+    token = request.form["token"]
+    pulse, temperature, updated_at, status = controller.get_user_health_status(token)
+    user_health_status = {"pulse": pulse, "temperature": temperature, "updated_at": updated_at, "status": status}
+    return jsonify(user_health_status)
+
+
 @app.route('/review', methods=['GET', 'POST'])
 def review():
     if request.method == 'GET':
         return render_template('review.html')
     elif request.method == 'POST':
-    #     name = request.form["name"]
-    #     password = request.form['password']
-    #     phone_number = request.form["phone_number"]
-    #     character = request.form["character"]
-    #     controller.sign_up(character, name, password, phone_number)
+        #     name = request.form["name"]
+        #     password = request.form['password']
+        #     phone_number = request.form["phone_number"]
+        #     character = request.form["character"]
+        #     controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('index'))
+
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
         return render_template('chat.html')
     elif request.method == 'POST':
-    #     name = request.form["name"]
-    #     password = request.form['password']
-    #     phone_number = request.form["phone_number"]
-    #     character = request.form["character"]
-    #     controller.sign_up(character, name, password, phone_number)
+        #     name = request.form["name"]
+        #     password = request.form['password']
+        #     phone_number = request.form["phone_number"]
+        #     character = request.form["character"]
+        #     controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(host=config.host, port=config.port)

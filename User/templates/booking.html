@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="../static/check_input.js" defer></script>
     <link rel="stylesheet" href="../static/booking.css">
 </head>
 
-<body onload="check_token()">
+<body onload="check_token();get_user_health_status();">
     <div class="header">
         <div id="datetime">
         <script type="text/javascript" src="../static/show_current_time.js"></script>
@@ -16,27 +15,38 @@
 
         <div class="healthStatus">
             <h3>Health Monitoring</h3>
-            <p>Body temperature: 37.1 degrees Celcius.</p>
-            <p>Pulse rate: 79 beats per minute.</p>
+            <p id ="temperature">Body temperature: loading</p>
+            <p id="pulse">Pulse rate: loading</p>
+            <p id="updated_at">Updated at: loading</p>
         </div>
     </div>
 
     <div class="makeTrip">
         <h2>Hi! Please make your trip </h2>
-        <form method="POST">	
+        <form method="POST" id="trip_form">	
             <label for="logi_pickup">longitude of pick-up position:</label>
-            <input type="text" name="long_of_pickup" class="long_of_pickup">
+            <input id= "long_pickup" type="text" name="long_of_pickup" class="long_of_pickup">
             <label for="lati_pickup">latitude of pick-up position:</label>
-            <input type="text" name="lati_of_pickup" class="lati_of_pickup">
+            <input id= "lati_pickup" type="text" name="lati_of_pickup" class="lati_of_pickup">
             <label for="logi_dropoff">longitude of drop-off position:</label>
             <input type="text" name="long_of_dropoff" class="long_of_dropoff">
             <label for="lati_dropoff">latitude of drop-off position:</label>    
             <input type="text" name="lati_of_dropoff" class="long_of_dropoff">
             <input type="hidden" id="token" name="token" value="1">
-            <button type="submit" class="submit">Upload my trip</button>
+            <button onclick="myFunction()" class="submit">Upload my trip</button>
         </form>
     </div>
     <script type="text/javascript" src="../static/check_token.js"></script>
+    <script type="text/javascript" src="../static/get_user_health_status.js"></script>
+    <script >
+        function myFunction(){
+            var lati = document.getElementById("lati_pickup").value ;
+            var long = document.getElementById("long_pickup").value ;
+            localStorage.setItem('lati_pickup', lati);
+            localStorage.setItem('long_pickup', long);
+            document.getElementById("trip_form").submit();
+        }
+    </script>
     <script>
         document.getElementById("token").value = localStorage.getItem("token");;
     </script>

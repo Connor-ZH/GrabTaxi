@@ -1,5 +1,6 @@
 from flask import Flask,make_response,url_for,request,render_template,session,redirect
 from Dispatch import view as dispatch_service
+from Health import view as health_service
 from Common.enum import *
 from Common.util import *
 
@@ -32,6 +33,11 @@ def get_driver_location(driver_id):
 def get_driver_detail(driver_id):
     driver_detail = dispatch_service.get_driver_detail(driver_id)
     return driver_detail
+
+def get_user_health_status(token):
+    user_id = verify_token_and_return_data(token)["user_id"]
+    pulse, temperature, updated_at, status = health_service.get_user_health_status(user_id)
+    return pulse, float(temperature), updated_at, status
 
 def update_trip_status(trip_id,status):
     status = Trip_status(status)
