@@ -34,3 +34,6 @@ def get_user_id(user_name):
 def sign_up_driver(driver_name, password, phone_number):
     controller.sign_up_driver(driver_name, password, phone_number)
     return
+
+def get_trip_id(user_id):
+    return controller.get_trip_id(user_id)

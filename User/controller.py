@@ -1,6 +1,10 @@
 from flask import Flask,make_response,url_for,request,render_template,session,redirect
 from Dispatch import view as dispatch_service
+<<<<<<< HEAD
 from Health import view as health_service
+=======
+from Message import view as message_service
+>>>>>>> backup
 from Common.enum import *
 from Common.util import *
 
@@ -22,8 +26,26 @@ def create_trip(token):
     trip_id = dispatch_service.create_trip(location_pickup,location_dropoff,user_id)
     return trip_id
 
-def get_driver_id(trip_id):
+def create_message(token,driver_id,trip_id):
+    token_data = verify_token_and_return_data(token)
+    if token_data == None:
+        return None
+    user_id = token_data["user_id"]
+    # find the trip id based on the user_id and trip status
+    message_service.create_message(trip_id, user_id, driver_id)
+    return trip_id
+
+def update_user_content(token,content):
+    token_data = verify_token_and_return_data(token)
+    if token_data == None:
+        return None
+    user_id = token_data["user_id"]
+    trip_id = dispatch_service.get_trip_id(user_id)
+    message_service.update_user_content(trip_id,  content)
+
+def get_driver_id(token,trip_id):
     driver_id = dispatch_service.get_driver_id(trip_id)
+    create_message(token,driver_id,trip_id)
     return driver_id
 
 def get_driver_location(driver_id):

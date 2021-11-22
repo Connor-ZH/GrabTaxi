@@ -1,14 +1,28 @@
+<<<<<<< HEAD
 
+=======
+{% extends "layout.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>    
+    <link rel="stylesheet" href="../static/show_trip.css">
+</head>
+>>>>>>> backup
 
 <h2>Hi, your trip id is {{trip_id}}</h>
 
 <div id="googleMap" style="width:75%;height:240px;"></div>
 <script type="text/javascript" src="../static/google_map_api.js"></script>
 <body onload="check_token(true)">
-    <br>
+    <h2>Welcome aboard! your trip id is {{trip_id}}</h2>
     <button id="button" onclick="search_driver('{{host}}','{{port}}','{{trip_id}}')">
         View detail
     </button>
+<<<<<<< HEAD
+=======
+    <br><br>
+>>>>>>> backup
     <button id="button" onclick="chat('{{host}}','{{port}}','{{trip_id}}')">
     Talk to my driver
     </button>

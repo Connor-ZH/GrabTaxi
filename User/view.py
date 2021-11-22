@@ -46,7 +46,8 @@ def show_trip(trip_id=None):
 @verify_token
 def search_driver():
     trip_id = request.form["trip_id"]
-    driver_id = controller.get_driver_id(trip_id)
+    token = request.headers.get("token")
+    driver_id = controller.get_driver_id(token,trip_id)
     return str(driver_id)
 
 
@@ -89,7 +90,7 @@ def sign_up():
         phone_number = request.form["phone_number"]
         character = request.form["character"]
         controller.sign_up(character, name, password, phone_number)
-        return redirect(url_for('index'))
+        return redirect(url_for('booking'))
 
 
 @app.route('/get_user_health_status', methods=['GET', 'POST'])
@@ -105,18 +106,28 @@ def review():
     if request.method == 'GET':
         return render_template('review.html')
     elif request.method == 'POST':
+<<<<<<< HEAD
         #     name = request.form["name"]
         #     password = request.form['password']
         #     phone_number = request.form["phone_number"]
         #     character = request.form["character"]
         #     controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('index'))
+=======
+    #     name = request.form["name"]
+    #     password = request.form['password']
+    #     phone_number = request.form["phone_number"]
+    #     character = request.form["character"]
+    #     controller.sign_up(character, name, password, phone_number)
+        return redirect(url_for('booking'))
+>>>>>>> backup
 
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
         return render_template('chat.html')
+<<<<<<< HEAD
     elif request.method == 'POST':
         #     name = request.form["name"]
         #     password = request.form['password']
@@ -124,6 +135,14 @@ def chat():
         #     character = request.form["character"]
         #     controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('index'))
+=======
+    else:
+        token = request.headers.get("token")
+        user_content = request.form["txt"]
+        controller.update_user_content(token,user_content)
+        return ('', 204)  # return no content
+
+>>>>>>> backup
 
 
 if __name__ == '__main__':

@@ -204,3 +204,10 @@ class Helper:
         self.cursor.execute(query)
         user_id = self.cursor.fetchall()[0][0]
         return user_id
+
+    @log_error_db
+    def get_trip_id(self, user_id):
+        query = f"SELECT trip_id FROM trip_table WHERE (status=2 or status=3) AND user_id={user_id};"
+        self.cursor.execute(query)
+        trip_id = self.cursor.fetchall()[0][0]
+        return trip_id
