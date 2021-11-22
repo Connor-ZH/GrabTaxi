@@ -37,7 +37,7 @@ def update_user_content(token,content):
         return None
     user_id = token_data["user_id"]
     trip_id = dispatch_service.get_trip_id(user_id)
-    message_service.update_user_content(trip_id, user_id, content)
+    message_service.update_user_content(trip_id,  content)
 
 def get_driver_id(token,trip_id):
     driver_id = dispatch_service.get_driver_id(trip_id)

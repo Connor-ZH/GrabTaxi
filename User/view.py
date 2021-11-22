@@ -45,7 +45,7 @@ def show_trip(trip_id=None):
 @verify_token
 def search_driver():
     trip_id = request.form["trip_id"]
-    token = request.form["token"]
+    token = request.headers.get("token")
     driver_id = controller.get_driver_id(token,trip_id)
     return str(driver_id)
 
