@@ -7,6 +7,7 @@ var Trip_status = {
 
 function search_driver(host,port,trip_id) {
     localStorage.setItem("trip_ongoing","true");
+    localStorage.setItem("trip_id",trip_id);
     window.trip_id = trip_id;
     var xhr = new XMLHttpRequest();
     var url = 'http://'+window.location.host+'/search_driver';
@@ -20,6 +21,7 @@ function search_driver(host,port,trip_id) {
             console.info(xhr.responseText)
             console.info("--------------------")
             if (xhr.responseText == "expired"){
+                clearInterval(window.timer)
                 window.alert("you need to login again")
                 window.location.replace('http://'+window.location.host+'/login');
             }
@@ -47,7 +49,7 @@ function startTimer(host,port,driver_id){
     window.latitude = document.createElement("p"); 
     window.latitude.innerText = "Updating the latitude of driver location";
     document.body.appendChild(window.latitude);
-    var timer = window.setInterval(get_driver_location,1000);
+    window.timer = window.setInterval(get_driver_location,1000);
     var xhr = new XMLHttpRequest();
     var url = 'http://'+window.location.host+'/get_driver_detail';
     xhr.open('post', url, true);
@@ -57,7 +59,7 @@ function startTimer(host,port,driver_id){
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.responseText == "expired"){
-                clearTimeout(timer);
+                clearInterval(window.timer)
                 window.alert("you need to login again");
                 window.location.replace('http://'+window.location.host+'/login');
             }
@@ -92,6 +94,7 @@ function update_trip_status(trip_id,status){
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.responseText == "expired"){
+                clearInterval(window.timer)
                 window.alert("you need to login again")
                 window.location.replace('http://'+window.location.host+'/login');
             }
@@ -114,12 +117,22 @@ function get_driver_location(){
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.responseText == "expired"){
+                clearInterval(window.timer)
                 window.alert("you need to login again")
                 window.location.replace('http://'+window.location.host+'/login');
             }
             var data = JSON.parse(xhr.response);
             window.longitude.innerText = "logitude of driver location is : "+data['longitude'];
             window.latitude.innerText = "latitude of driver location is : "+data['latitude'];
+            driver_lat = parseFloat(data['latitude'])/1000+1.3001
+            driver_lng = parseFloat(data['longitude'])/300+103.6001
+            var driver_LatLng = new google.maps.LatLng(driver_lat,driver_lng,);
+            var driver_marker = new google.maps.Marker({
+              position: driver_LatLng,
+              color: "white",
+              label:"Driver",
+            });
+            driver_marker.setMap(window.map);  
         };
     };
 };

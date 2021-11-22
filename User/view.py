@@ -36,6 +36,7 @@ def booking():
             return redirect(url_for('show_trip', trip_id=trip_id))
         return redirect(url_for('login'))
 
+
 @app.route('/show_trip/<trip_id>', methods=['GET', 'POST'])
 def show_trip(trip_id=None):
     return render_template('show_booking_result.html', trip_id=trip_id)
@@ -45,7 +46,8 @@ def show_trip(trip_id=None):
 @verify_token
 def search_driver():
     trip_id = request.form["trip_id"]
-    driver_id = controller.get_driver_id(trip_id)
+    token = request.headers.get("token")
+    driver_id = controller.get_driver_id(token,trip_id)
     return str(driver_id)
 
 
@@ -77,6 +79,7 @@ def update_trip_status():
     controller.update_trip_status(trip_id, status)
     return "Done with updating trip status"
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
@@ -89,30 +92,34 @@ def sign_up():
         controller.sign_up(character, name, password, phone_number)
         return redirect(url_for('booking'))
 
+
+@app.route('/get_user_health_status', methods=['GET', 'POST'])
+def get_user_health_status():
+    token = request.form["token"]
+    pulse, temperature, updated_at, status = controller.get_user_health_status(token)
+    user_health_status = {"pulse": pulse, "temperature": temperature, "updated_at": updated_at, "status": status}
+    return jsonify(user_health_status)
+
+
 @app.route('/review', methods=['GET', 'POST'])
 def review():
     if request.method == 'GET':
         return render_template('review.html')
     elif request.method == 'POST':
-    #     name = request.form["name"]
-    #     password = request.form['password']
-    #     phone_number = request.form["phone_number"]
-    #     character = request.form["character"]
-    #     controller.sign_up(character, name, password, phone_number)
+        trip_id = request.form["trip_id"]
+        review_content = request.form["review"]
+        controller.update_trip_review(trip_id,review_content)
         return redirect(url_for('booking'))
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
-        print("checkpoint")
         return render_template('chat.html')
     else:
         token = request.headers.get("token")
-        trip_id = controller.create_message(token)
-        if trip_id:
-            return ('', 204)  # return no content
-        return redirect(url_for("login"))
-
+        user_content = request.form["txt"]
+        controller.update_user_content(token,user_content)
+        return ('', 204)  # return no content
 
 if __name__ == '__main__':
     app.run(host=config.host, port=config.port)

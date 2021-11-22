@@ -17,7 +17,7 @@ class Helper:
     def insert_driver_health_status(self, driver_id,pulse,temperature,BAC,status):
         query = "INSERT INTO driver_health_status_table " \
                 "(driver_id,pulse,temperature,BAC,status)" \
-                f"VALUES ('{driver_id}','{pulse}', '{temperature}', '{BAC}', '{status}');"
+                f"VALUES ('{driver_id}','{pulse}', '{temperature}', '{BAC}', '{status.value}');"
         self.cursor.execute(query)
         self.connection.commit()
         self.cursor.execute(query)
@@ -27,7 +27,7 @@ class Helper:
     def insert_user_health_status(self, user_id,pulse,temperature,status):
         query = "INSERT INTO user_health_status_table " \
                 "(user_id,pulse,temperature,status)" \
-                f"VALUES ('{user_id}','{pulse}', '{temperature}','{status}');"
+                f"VALUES ('{user_id}','{pulse}', '{temperature}','{status.value}');"
         self.cursor.execute(query)
         self.connection.commit()
         self.cursor.execute(query)
@@ -35,6 +35,7 @@ class Helper:
 
     @log_error_db
     def get_user_health_status_detail(self, user_id):
+        print(user_id)
         query = "SELECT pulse,temperature,updated_at,status FROM user_health_status_table " \
                 f"WHERE user_id = '{user_id}'"
         self.cursor.execute(query)
@@ -44,7 +45,8 @@ class Helper:
         temperature = res[0][1]
         updated_at = res[0][2]
         status = res[0][3]
-        return pulse, temperature, updated_at,status
+        print(pulse, temperature, updated_at, status)
+        return pulse, temperature, updated_at, status
 
     @log_error_db
     def get_driver_health_status_detail(self, driver_id):
@@ -87,10 +89,9 @@ class Helper:
         self.cursor.execute(query)
         self.connection.commit()
 
-    @log_error_db
     def update_user_health_status(self, user_id,pulse,temperature,status):
         query = "UPDATE user_health_status_table " \
-                f"SET status = {status} ," \
+                f"SET status = {status.value} ," \
                 f"pulse = {pulse}," \
                 f"temperature = {temperature}," \
                 f"updated_at = now() " \
@@ -101,7 +102,7 @@ class Helper:
     @log_error_db
     def update_driver_health_status(self,driver_id,pulse,temperature,BAC,status):
         query = "UPDATE driver_health_status_table " \
-                f"SET status = {status} ," \
+                f"SET status = {status.value} ," \
                 f"pulse = {pulse}," \
                 f"temperature = {temperature}," \
                 f"blood_alcohol_concentration = {BAC}," \

@@ -17,8 +17,12 @@
     <input type="radio" name="score" checked="checked">descent
     <input type="radio" name="score" checked="checked">wonderful
     <br><br>
-    <textarea rows="10" cols="50" placeholder="write your review here"></textarea>
+    <textarea rows="10" cols="50" name="review" placeholder="write your review here"></textarea>
     <br><br>
+    <input type="hidden" id="trip_id" name="trip_id" value=1>
     <button>Submit Review</button>
 </form>
 </body>
+<script>
+    document.getElementById("trip_id").value = localStorage.getItem("trip_id");;
+</script>

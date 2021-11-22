@@ -10,4 +10,6 @@ def update_driver_health_status(driver_id,pulse,temperature,BAC):
     driver_status = controller.update_driver_health_status(driver_id,pulse,temperature,BAC)
     return driver_status
 
-
+def get_user_health_status(user_id):
+    pulse, temperature, updated_at,status = controller.get_user_health_status(user_id)
+    return pulse, temperature, updated_at,status
