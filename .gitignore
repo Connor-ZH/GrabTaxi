@@ -5,7 +5,3 @@ test.py
 .DS_Store
 /redis-6.2.5
 .vscode
-/Dispatch/config.py
-/Geo/config.py
-/Health/config.py
-/Message/config.py
