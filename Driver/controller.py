@@ -21,3 +21,4 @@ def update_all_drivers_locations(with_redis=True):
     while 1:
         schedule.run_pending()
         time.sleep(1)
+        
