@@ -18,4 +18,3 @@ def update_driver_location(driver_id, longitude, latitude):
 
 def delete_driver_location(driver_id):
     redis_helper.delete_driver_location_redis(driver_id)
-
