@@ -17,6 +17,3 @@ class Redis_helper:
 
     def delete_driver_location_redis(self, driver_id):
         self.redis.delete(driver_id)
-
-
-
